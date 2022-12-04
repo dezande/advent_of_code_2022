@@ -9,6 +9,15 @@ class CampCleanup
       new(input)
         .count_first_part
     end
+
+    def overlaps?(input)
+      new(input).overlaps
+    end
+
+    def count_second_part(input)
+      new(input)
+        .count_second_part
+    end
   end
 
   attr_reader :input
@@ -20,7 +29,13 @@ class CampCleanup
   def fully_contains
     input
       .lines(chomp: true)
-      .map { |line| one_section_contain_other_section?(line) }
+      .map { |line| Section.new(line).fully_contain? }
+  end
+
+  def overlaps
+    input
+      .lines(chomp: true)
+      .map { |line| Section.new(line).overlap? }
   end
 
   def count_first_part
@@ -28,17 +43,76 @@ class CampCleanup
       .count(true)
   end
 
+  def count_second_part
+    overlaps.count(true)
+  end
+end
+
+class Section
+  attr_reader :sections
+
+  def initialize(sections)
+    @sections = sections
+  end
+
+  def fully_contain?
+    intersection == first_section ||  intersection == second_section
+  end
+
+  def overlap?
+    union == section_one_and_two && section_one_and_two_max_min >= section_one_and_two_min_max
+  end
+
   private
 
-  def one_section_contain_other_section?(sections)
-    first, two = sections.split(',')
-    section_one = build_section(first)
-    section_two = build_section(two)
+  def intersection
+    first_section.intersection(second_section)
+  end
 
-    intersection = section_one.intersection(section_two)
+  def union 
+    first_section
+      .union(second_section)
+      .sort
+  end
 
-    (intersection.first == section_one.first && intersection.last == section_one.last) ||
-      (intersection.first == section_two.first && intersection.last == section_two.last)
+  def first_section
+    build_section(sections.split(',').first)
+  end
+
+  def second_section
+    build_section(sections.split(',').last)
+  end
+
+  def section_one_and_two
+    (section_one_and_two_min..section_one_and_two_max).to_a
+  end
+
+  def section_one_and_two_min
+    [
+      sections.split(',').first.split('-').min,
+      sections.split(',').last.split('-').min
+    ].min
+  end
+
+  def section_one_and_two_min_max
+    [
+      sections.split(',').first.split('-').min,
+      sections.split(',').last.split('-').min
+    ].max
+  end
+
+  def section_one_and_two_max
+    [
+      sections.split(',').first.split('-').max,
+      sections.split(',').last.split('-').max
+    ].max
+  end
+
+  def section_one_and_two_max_min
+    [
+      sections.split(',').first.split('-').max,
+      sections.split(',').last.split('-').max
+    ].min
   end
 
   def build_section(start_end_section)
