@@ -31,11 +31,18 @@ class CampCleanup
   private
 
   def one_section_contain_other_section?(sections)
-    section_first, section_two = sections.split(',')
-    first_start, first_end = section_first.split('-')
-    second_start, second_end = section_two.split('-')
+    first, two = sections.split(',')
+    section_one = build_section(first)
+    section_two = build_section(two)
 
-    (first_start <= second_start && second_end <= first_end) ||
-      (second_start <= first_start && first_end <= second_end)
+    intersection = section_one.intersection(section_two)
+
+    (intersection.first == section_one.first && intersection.last == section_one.last) ||
+      (intersection.first == section_two.first && intersection.last == section_two.last)
+  end
+
+  def build_section(start_end_section)
+    section_start, section_end = start_end_section.split('-')
+    (section_start..section_end).to_a
   end
 end
