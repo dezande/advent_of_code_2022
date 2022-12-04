@@ -6,14 +6,20 @@ class CalorieCounting
   end
 
   def max
-    total_by_day.max
+    calorie_by_elf.max
   end
 
-  def total_by_day
+  def top_max_sum
+    calorie_by_elf.max(3).sum
+  end
+
+  private
+
+  def calorie_by_elf
     input
+      .lines(chomp: true)
       .map(&:to_i)
-      .each_slice(3)
-      .to_a
+      .chunk_while {|i, j| j != 0 }
       .map(&:sum)
   end
 end
