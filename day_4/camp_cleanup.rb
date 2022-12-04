@@ -60,19 +60,13 @@ class Section
   end
 
   def overlap?
-    union == section_one_and_two && section_one_and_two_max_min >= section_one_and_two_min_max
+    !intersection.empty?
   end
 
   private
 
   def intersection
     first_section.intersection(second_section)
-  end
-
-  def union 
-    first_section
-      .union(second_section)
-      .sort
   end
 
   def first_section
@@ -83,10 +77,6 @@ class Section
     build_section(sections.split(',').last)
   end
 
-  def section_one_and_two
-    (section_one_and_two_min..section_one_and_two_max).to_a
-  end
-
   def section_one_and_two_min
     [
       sections.split(',').first.split('-').min,
@@ -94,25 +84,11 @@ class Section
     ].min
   end
 
-  def section_one_and_two_min_max
-    [
-      sections.split(',').first.split('-').min,
-      sections.split(',').last.split('-').min
-    ].max
-  end
-
   def section_one_and_two_max
     [
       sections.split(',').first.split('-').max,
       sections.split(',').last.split('-').max
     ].max
-  end
-
-  def section_one_and_two_max_min
-    [
-      sections.split(',').first.split('-').max,
-      sections.split(',').last.split('-').max
-    ].min
   end
 
   def build_section(start_end_section)
