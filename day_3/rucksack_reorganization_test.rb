@@ -25,4 +25,16 @@ class RucksackReoganizationTest < Minitest::Test
     rucksack_reorganization = RucksackReoganization.new(input)
     assert_equal 157, rucksack_reorganization.score
   end
+
+  def test_all_rucksacks_new_organisation_letters
+    input = "vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw\n"
+    rucksack_reorganization = RucksackReoganization.new(input)
+    assert_equal ['r', 'Z'], rucksack_reorganization.new_organisation_letters
+  end
+
+  def test_all_rucksacks_new_organisation_score
+    input = "vJrwpWtwJgWrhcsFMMfFFhFp\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\nPmmdzqPrVvPwwTWBwg\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\nttgJtRGJQctTZtZT\nCrZsJsPPZsGzwwsLwLmpwMDw\n"
+    rucksack_reorganization = RucksackReoganization.new(input)
+    assert_equal 70, rucksack_reorganization.new_score
+  end
 end
