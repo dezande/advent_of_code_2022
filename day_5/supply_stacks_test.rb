@@ -42,6 +42,12 @@ move 1 from 1 to 2
     supply_stacks.run
     assert_equal(%w(C M Z), supply_stacks.top_stacks)
   end
+
+  def test_example_with_crate_mover_9001
+    supply_stacks = SupplyStacks.new(input)
+    supply_stacks.run_crate_mover_9001
+    assert_equal(%w(M C D), supply_stacks.top_stacks)
+  end
 end
 
 class CrateTest < Minitest::Test
@@ -75,6 +81,17 @@ class CrateTest < Minitest::Test
     assert_equal(stacks, crate.stacks)
   end
 
+  def test_move_one_with_crate_mover_9001
+    crate = Crate.new(input)
+    stacks = [
+      %w(Z N D),
+      %w(M C),
+      %w(P)
+    ]
+    crate.run_crate_mover_9001(move: 1, from:2, to: 1)
+    assert_equal(stacks, crate.stacks)
+  end
+
   def test_move_two_time
     crate = Crate.new(input)
     stacks = [
@@ -83,6 +100,17 @@ class CrateTest < Minitest::Test
       %w(P)
     ]
     crate.run(move: 2, from:2, to: 1)
+    assert_equal(stacks, crate.stacks)
+  end
+
+  def test_move_two_with_crate_mover_9001
+    crate = Crate.new(input)
+    stacks = [
+      %w(Z N C D),
+      %w(M),
+      %w(P)
+    ]
+    crate.run_crate_mover_9001(move: 2, from:2, to: 1)
     assert_equal(stacks, crate.stacks)
   end
 
@@ -99,5 +127,14 @@ class CrateTest < Minitest::Test
     crate.run(move: 2, from: 2, to: 1)
     crate.run(move: 1, from: 1, to: 2)
     assert_equal(%w(C M Z), crate.top_stacks)
+  end
+
+  def test_example_with_crate_mover_9001
+    crate = Crate.new(input)
+    crate.run_crate_mover_9001(move: 1, from: 2, to: 1)
+    crate.run_crate_mover_9001(move: 3, from: 1, to: 3)
+    crate.run_crate_mover_9001(move: 2, from: 2, to: 1)
+    crate.run_crate_mover_9001(move: 1, from: 1, to: 2)
+    assert_equal(%w(M C D), crate.top_stacks)
   end
 end

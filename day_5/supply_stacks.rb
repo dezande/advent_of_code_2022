@@ -23,6 +23,16 @@ class SupplyStacks
     end
   end
 
+  def run_crate_mover_9001
+    procedures.each do |procedure|
+      crate.run_crate_mover_9001(
+        move: procedure[:move],
+        from: procedure[:from],
+        to: procedure[:to]
+      )
+    end
+  end
+
   def procedures
     input
       .split("\n\n")
@@ -61,6 +71,14 @@ class Crate
   def run(move:, from:, to:)
     (0...move).each do |_|
       @stacks[to - 1] << stacks[from - 1].pop
+    end
+  end
+
+  def run_crate_mover_9001(move:, from:, to:)
+    if move == 1
+      @stacks[to - 1] << stacks[from - 1].pop
+    else
+      @stacks[to - 1] += stacks[from - 1].pop(move)
     end
   end
 
