@@ -13,6 +13,11 @@ module NoSpaceLeftOnDevice
       ls << dir_or_file
     end
 
+    def [](key)
+      ls
+        .find { |dir_or_file| dir_or_file.name == key && dir_or_file.class == Dir }
+    end
+
     def size
       ls
         .map(&:size)

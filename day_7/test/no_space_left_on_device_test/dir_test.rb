@@ -54,6 +54,15 @@ module NoSpaceLeftOnDeviceTest
       assert_equal(dir_bar, dir_foo.ls.first)
     end
 
+    def test_access_to_dir
+      dir_foo = NoSpaceLeftOnDevice::Dir.new(name: 'foo')
+      dir_bar = NoSpaceLeftOnDevice::Dir.new(name: 'bar')
+      file_bar = NoSpaceLeftOnDevice::File.new(name: 'bar', size: 10)
+      dir_foo.add(dir_bar)
+      dir_foo.add(file_bar)
+      assert_equal(dir_bar, dir_foo['bar'])
+    end
+
     def test_sum_with_directory
       dir = NoSpaceLeftOnDevice::Dir.new(name: 'foobar')
       dir_bar = NoSpaceLeftOnDevice::Dir.new(name: 'bar')
