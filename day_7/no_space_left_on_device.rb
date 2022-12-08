@@ -32,7 +32,12 @@ class NoSpaceLeftOnDevice
   end
 
   def part_two
-    device.find_the_small
+    free = 70000000 - device.size
+    size_min = 30000000 - free
+    device
+      .all_dir_size
+      .select { |size| size >= size_min }
+      .min
   end
 end
 
@@ -79,6 +84,13 @@ class NewDir
     contents
       .map(&:size)
       .sum
+  end
+
+  def all_dir_size
+    contents
+      .select { |content| content.class == NewDir }
+      .map(&:all_dir_size)
+      .flatten << size
   end
 
   def inspect
