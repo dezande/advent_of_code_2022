@@ -56,6 +56,47 @@ class Tree
     trees_west_sizes.max < current_tree_size
   end
 
+  def score_nord
+    trees_north_sizes
+      .reverse
+      .each_with_index do |tree, index|
+        return index + 1 if tree >= current_tree_size 
+      end
+    trees_north_sizes.size
+  end
+
+  def score_south
+    trees_south_sizes
+      .each_with_index do |tree, index|
+        return index + 1 if tree >= current_tree_size 
+      end
+    trees_south_sizes.size
+  end
+
+  def score_east
+    trees_east_sizes
+      .reverse
+      .each_with_index do |tree, index|
+        return index + 1 if tree >= current_tree_size 
+      end
+    trees_east_sizes.size
+  end
+
+  def score_west
+    trees_west_sizes
+      .each_with_index do |tree, index|
+        return index + 1 if tree >= current_tree_size 
+      end
+    trees_west_sizes.size
+  end
+
+  def score_total
+    score_nord *
+      score_south *
+      score_east *
+      score_west
+  end
+
   private
 
   def current_tree_size

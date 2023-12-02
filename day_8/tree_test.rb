@@ -79,4 +79,132 @@ class TreeTest < Minitest::Test
     tree = Tree.new(x: 1, y: 1, map:)
     refute tree.visible?
   end
+
+  def test_small_score
+    map = [
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2]
+    ]
+    tree = Tree.new(x: 2, y: 2, map:)
+    assert_equal 1, tree.score_nord
+    assert_equal 1, tree.score_south
+    assert_equal 1, tree.score_east
+    assert_equal 1, tree.score_west
+    assert_equal 1, tree.score_total
+  end
+
+  def test_score_nord
+    map = [
+      [2, 2, 1, 2, 2],
+      [2, 2, 1, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2]
+    ]
+    tree = Tree.new(x: 2, y: 2, map:)
+    assert_equal 2, tree.score_nord
+    assert_equal 1, tree.score_south
+    assert_equal 1, tree.score_east
+    assert_equal 1, tree.score_west
+    assert_equal 2, tree.score_total
+  end
+
+  def test_score_south
+    map = [
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 1, 2, 2],
+      [2, 2, 1, 2, 2]
+    ]
+    tree = Tree.new(x: 2, y: 2, map:)
+    assert_equal 2, tree.score_nord
+    assert_equal 1, tree.score_south
+    assert_equal 1, tree.score_east
+    assert_equal 1, tree.score_west
+    assert_equal 2, tree.score_total
+  end
+
+  def test_score_south
+    map = [
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 1, 2, 2],
+      [2, 2, 1, 2, 2]
+    ]
+    tree = Tree.new(x: 2, y: 2, map:)
+    assert_equal 1, tree.score_nord
+    assert_equal 2, tree.score_south
+    assert_equal 1, tree.score_east
+    assert_equal 1, tree.score_west
+    assert_equal 2, tree.score_total
+  end
+
+  def test_score_east
+    map = [
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [1, 1, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2]
+    ]
+    tree = Tree.new(x: 2, y: 2, map:)
+    assert_equal 1, tree.score_nord
+    assert_equal 1, tree.score_south
+    assert_equal 2, tree.score_east
+    assert_equal 1, tree.score_west
+    assert_equal 2, tree.score_total
+  end
+
+  def test_score_west
+    map = [
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 1, 1],
+      [2, 2, 2, 2, 2],
+      [2, 2, 2, 2, 2]
+    ]
+    tree = Tree.new(x: 2, y: 2, map:)
+    assert_equal 1, tree.score_nord
+    assert_equal 1, tree.score_south
+    assert_equal 1, tree.score_east
+    assert_equal 2, tree.score_west
+    assert_equal 2, tree.score_total
+  end
+
+  def test_first_exemple
+    map = [
+      [3, 0, 3, 7, 3],
+      [2, 5, 5, 1, 2],
+      [6, 5, 3, 3, 2],
+      [3, 3, 5, 4, 9],
+      [3, 5, 3, 9, 0]
+    ]
+    tree = Tree.new(x: 1, y: 2, map:)
+    assert_equal 1, tree.score_nord
+    assert_equal 2, tree.score_south
+    assert_equal 1, tree.score_east
+    assert_equal 2, tree.score_west
+    assert_equal 4, tree.score_total
+  end
+
+  def test_second_exemple
+    map = [
+      [3, 0, 3, 7, 3],
+      [2, 5, 5, 1, 2],
+      [6, 5, 3, 3, 2],
+      [3, 3, 5, 4, 9],
+      [3, 5, 3, 9, 0]
+    ]
+    tree = Tree.new(x: 3, y: 2, map:)
+    assert_equal 2, tree.score_nord
+    assert_equal 1, tree.score_south
+    assert_equal 2, tree.score_east
+    assert_equal 2, tree.score_west
+    assert_equal 8, tree.score_total
+  end
 end
