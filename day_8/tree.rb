@@ -1,4 +1,10 @@
 class Tree
+  class << self
+    def visible?(...)
+      new(...).visible?
+    end
+  end
+
   attr_reader :x, :y, :map
 
   def initialize(x:, y:, map:)
