@@ -3,6 +3,10 @@ class Tree
     def visible?(...)
       new(...).visible?
     end
+
+    def score_total(...)
+      new(...).score_total
+    end
   end
 
   attr_reader :x, :y, :map
